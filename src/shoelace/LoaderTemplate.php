@@ -18,7 +18,9 @@ class LoaderTemplate implements Loader {
     }
     
     public function paths($paths) {
-        $array = array_shift($paths);
+        $paths = (array)$paths;
+        
+        $array = (array)array_shift($paths);
 
         while ($current = array_shift($paths)) {
             $values = array();
@@ -32,7 +34,7 @@ class LoaderTemplate implements Loader {
             $array = $values;
         }
 
-        return $values;
+        return $array;
     }
 
     public function glob($pattern) {
@@ -46,8 +48,6 @@ class LoaderTemplate implements Loader {
             if ($count >= 0 && $count - count($files) <= 0) {
                 break;
             }
-            
-            echo $path.$pattern;
             
             $files = array_merge($files, $this->glob($path.$pattern));
         }
